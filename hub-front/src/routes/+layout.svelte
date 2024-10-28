@@ -27,8 +27,7 @@
             <a href="/products/dailynews" class="group relative flex items-center gap-x-4 sm:gap-x-6 rounded-md sm:rounded-lg p-3 sm:p-4 text-sm leading-5 sm:leading-6 hover:bg-gray-50">
               <div class="flex h-10 w-10 sm:h-11 sm:w-11 flex-none items-center justify-center rounded-md sm:rounded-lg bg-gray-50 group-hover:bg-white">
                 <svg class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 3.75H4.5a2.25 2.25 0 0 0-2.25 2.25v12a2.25 2.25 0 0 0 2.25 2.25h15a2.25 2.25 0 0 0 2.25-2.25v-12a2.25 2.25 0 0 0-2.25-2.25ZM4.5 6h15v12h-15V6Zm3 3h9v1.5H7.5V9Zm0 3h9v1.5H7.5V12Zm0 3h6v1.5H7.5V15Z" />
                 </svg>
               </div>
               <div class="flex-auto">
@@ -56,10 +55,10 @@
       </div>
 
       <a href="/notice" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">Solutions</a>
-      <a href="/faq" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">FAQ</a>
+      <a href="/about" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">About</a>
     </div>
     <div class="flex flex-1 justify-end">
-      <a href="#" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">Contact <span aria-hidden="true">&rarr;</span></a>
+      <a href="/contact" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">Contact <span aria-hidden="true">&rarr;</span></a>
     </div>
   </nav>
 </header>

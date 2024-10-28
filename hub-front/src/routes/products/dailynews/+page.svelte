@@ -37,7 +37,7 @@
                     </div>
                     <div class="relative min-h-[30rem] w-full grow [container-type:inline-size] max-lg:mx-auto max-lg:max-w-sm">
                         <div class="absolute inset-x-10 bottom-0 top-10 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
-                            <img class="size-full object-cover object-top" src="/src/routes/products/dailynews/dailynews1.png" alt="Daily News Image">
+                            <img class="size-full object-cover object-top" src="/src/routes/products/dailynews/dailynews1.png" alt="Daily News">
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">MongoDB 기반 변경 가능한 키워드</p>
                         <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">키워드 변경도 웹 인터페이스로 가능합니다. 소스코드 볼 일이 없습니다. SQLite 쓰면 딱 좋을 그거에 굳이 몽고DB를 사용했죠.</p>
                         <div class="mt-4 flex flex-1 items-center [container-type:inline-size] max-lg:py-6 lg:pb-2">
-                            <img class="h-[min(152px,40cqw)] object-cover object-center rounded-lg" src="/src/routes/products/dailynews/dailynews2.png" alt="keyword change image">
+                            <img class="h-[min(152px,40cqw)] object-cover object-center rounded-lg" src="/src/routes/products/dailynews/dailynews2.png" alt="keyword change">
                         </div>
                     </div>
                 </div>

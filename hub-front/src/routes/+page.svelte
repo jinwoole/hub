@@ -35,7 +35,7 @@
       style="opacity: {1 - sectionProgress[0]}; transform: translateY({-10 + sectionProgress[0] * -20}vh); transition: opacity 0.5s, transform 0.5s;"
     >
       <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-        Welcome to My Interactive World
+        뭐라고 적지?
       </h1>
       <div
         class="flex flex-col items-center mt-4 text-gray-700 text-sm opacity-80 transition-opacity duration-500"
