@@ -74,7 +74,7 @@
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                     <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">이젠 기억도 안나는 코드</p>
-                        <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">상황이 변하면 사람도 변합니다. 전략업무 하면서 코드 치는법은 거의 잊어버렸고 코딩은 AI에만 의존하고 있습니다. 코딩테스트 볼 것도 아니고 일단 작동은 하니깐 괜찮습니다.</p>
+                        <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">상황이 변하면 사람도 변합니다. 전략업무 하면서 코드 치는법은 거의 잊어버렸고 코딩은 AI에만 의존하고 있습니다. 코딩테스트 볼 것도 아니고 일단 작동은 하니깐 괜찮겠죠.</p>
                     </div>
                     <div class="relative min-h-[30rem] w-full grow">
                         <div class="absolute bottom-0 left-10 right-0 top-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
