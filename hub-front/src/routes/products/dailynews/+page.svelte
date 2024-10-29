@@ -16,7 +16,7 @@
     }
 </style>
 
-<div class="bg-gray-50 py-24 sm:py-32 font-pretendard">
+<div class="py-24 sm:py-32 font-pretendard">
     <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 class="text-center text-base/7 font-pretendard-semibold text-indigo-600">아침을 조금 덜 귀찮게!</h2>
         <p class="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-pretendard-semibold tracking-tight text-gray-950 sm:text-5xl">루틴한 검색의 <br />유용한 파트너</p>
@@ -29,8 +29,7 @@
 
         <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
             <div class="relative lg:row-span-2">
-                <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
-                <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+                <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[2rem+1px]">
                     <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">일단 돌아는 갑니다</p>
                         <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">알리익스프레스에서 산 퇴역 제온과 미심쩍은 메인보드에서 구동됩니다.</p>
@@ -44,7 +43,6 @@
                 <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-l-[2rem]"></div>
             </div>
             <div class="relative max-lg:row-start-1">
-                <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem]"></div>
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                     <div class="px-8 pt-8 sm:px-10 sm:pt-10">
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">MongoDB 기반 변경 가능한 키워드</p>
@@ -57,7 +55,6 @@
                 <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem]"></div>
             </div>
             <div class="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
-                <div class="absolute inset-px rounded-lg bg-white"></div>
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
                     <div class="px-8 pt-8 sm:px-10 sm:pt-10">
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">아예 없지는 않은 보안</p>
@@ -70,7 +67,6 @@
                 <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
             </div>
             <div class="relative lg:row-span-2">
-                <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                     <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
                         <p class="mt-2 text-lg/7 font-pretendard-medium tracking-tight text-gray-950 max-lg:text-center">이젠 기억도 안나는 코드</p>
