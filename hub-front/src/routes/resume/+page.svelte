@@ -3,7 +3,7 @@
     // Pretendard 폰트 설정
     const profile = {
       name: "이진우",
-      title: "임금체불을 맞이해 실존적 고민 하는 중",
+      title: "iAcloud에서 하루가 다르게 성장하고 있는 개발자",
       location: "서울, 대한민국",
       email: "jinwoolee42@outlook.com",
       linkedin: "https://www.linkedin.com/in/jinwoo-lee-profile/"
@@ -13,12 +13,23 @@
       {
         position: "경영전략팀",
         company: "티맥스클라우드",
-        duration: "2023.12 - 현재",
+        duration: "2023.12 - 2025.2",
         details: [
           "시장 리서치",
           "글로벌 파트너십"
         ]
+      },
+            {
+        position: "개발팀",
+        company: "iAcloud",
+        duration: "2025.2 - 현재",
+        details: [
+          "프라이빗 클라우드, CloudiA 위의 쿠버네티스 서비스 플랫폼 부분 개발",
+          "LLM DevOps 플랫폼, GeniA 개발",
+          "그 외 다수"
+        ]
       }
+
     ];
   
     const education = [
@@ -32,12 +43,12 @@
       { institution: "English", title: "OPIc IH", year: "2023.9" },
     ];
   
-    const skills = ["C", "AWS", "Svelte", "Powerpoint", "Word"];
+    const skills = ["AI Driven Development", "Software Architecting", "Kubernetes", "AWS", "Business Developement"];
   
     const projects = [
       {
-        name: "실무 프로젝트 경험 없음",
-        description: "멍청한 위기가 발생하지 않았다면, 놀라운 일을 많이 이뤘을텐데",
+        name: "할 것",
+        description: "앞으로 흥미로운게 많아질 것",
         link: "/projects/profile-website"
       }
     ];

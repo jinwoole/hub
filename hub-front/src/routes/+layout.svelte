@@ -24,7 +24,8 @@
 
     <!-- 기존 내비게이션 유지 -->
     <div class="flex gap-x-4 sm:gap-x-6 lg:gap-x-12">
-      <!-- Products 드롭다운을 위한 컨테이너 -->
+      <!-- Products 드롭다운을 위한 컨테이너 (임시로 숨김) -->
+      <!-- 
       <div 
         class="relative inline-block" 
         on:mouseenter={() => isProductsDropdownOpen = true} 
@@ -41,7 +42,6 @@
           </svg>
         </button>
 
-        <!-- Products 드롭다운 메뉴 -->
         <div
           class="absolute left-0 top-full z-10 mt-0 w-60 sm:w-screen sm:max-w-md overflow-hidden rounded-lg sm:rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition-all duration-200 transform"
           class:opacity-100={isProductsDropdownOpen}
@@ -52,7 +52,6 @@
           class:pointer-events-none={!isProductsDropdownOpen}
         >
           <div class="p-3 sm:p-4">
-            <!-- Daily News 링크 -->
             <a href="/products/dailynews" class="group relative flex items-center gap-x-4 sm:gap-x-6 rounded-md sm:rounded-lg p-3 sm:p-4 text-sm leading-5 sm:leading-6 hover:bg-gray-50">
               <div class="flex h-10 w-10 sm:h-11 sm:w-11 flex-none items-center justify-center rounded-md sm:rounded-lg bg-gray-50 group-hover:bg-white">
                 <svg class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -64,7 +63,6 @@
                 <p class="mt-1 text-gray-600">빠르고 정확한 뉴스레터 작성</p>
               </div>
             </a>
-            <!-- Product 3 링크 -->
             <a href="/products/insights" class="group relative flex items-center gap-x-4 sm:gap-x-6 rounded-md sm:rounded-lg p-3 sm:p-4 text-sm leading-5 sm:leading-6 hover:bg-gray-50">
               <div class="flex h-10 w-10 sm:h-11 sm:w-11 flex-none items-center justify-center rounded-md sm:rounded-lg bg-gray-50 group-hover:bg-white">
                 <svg class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -79,6 +77,7 @@
           </div>
         </div>
       </div>
+      -->
 
       <!-- Resume 링크 -->
       <a href="/resume" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">Resume</a>
@@ -105,19 +104,20 @@
 {#if isDrawerOpen}
   <!-- 드로어 코드 -->
   <div class="fixed inset-0 z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-    <!-- 배경 오버레이 -->
+    <!-- 배경 오버레이 - 클릭하면 드로어 닫힘 -->
     <div
-      class="fixed inset-0 bg-gray-500 bg-opacity-75"
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 cursor-pointer"
       on:click={() => isDrawerOpen = false}
+      on:keydown={(e) => e.key === 'Escape' && (isDrawerOpen = false)}
       tabindex="0"
       role="button"
       aria-label="Close drawer"
       transition:fade
     ></div>
 
-    <div class="fixed inset-0 overflow-hidden">
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
       <div class="absolute inset-0 overflow-hidden">
-        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
           <!-- 슬라이드 오버 패널 -->
           <div
             class="pointer-events-auto relative w-screen max-w-md"
