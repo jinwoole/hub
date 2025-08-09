@@ -2,195 +2,373 @@
   import { onMount } from 'svelte';
   let scrollY = 0;
   let sectionProgress = [0, 0, 0, 0, 0];
-
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentSection = 0;
+  let section2El;
+  
+  // Subtitle typewriter state
+  const subtitleTexts = [
+    '빠르게 만들고 더 빠르게 학습합니다.',
+    '작은 시작, 빠른 반복, 큰 임팩트.',
+    '빠르게 실험하고 과감히 수확합니다.',
+    '속도를 무기로, 결과로 증명합니다.'
+  ];
+  let subtitleDisplay = '';
+  let subtitleIsDeleting = false;
+  let subtitleCurrentIndex = 0;
+  let subtitleTypingTimer;
+  const subtitleTypeSpeed = 80;
+  const subtitleDeleteSpeed = 45;
+  const subtitlePauseMs = 2000;
+  const subtitleEmptyPauseMs = 800;
+  
   const handleScroll = () => {
     scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
-
+    
+    // Calculate current section
+    currentSection = Math.floor(scrollY / windowHeight);
+    
     const sections = [
-      { start: 0, end: 0.5 * windowHeight }, // Section 1: Welcome message scroll progress
-      { start: 0.3 * windowHeight, end: 1.3 * windowHeight }, // Section 2: Introduction message scroll progress
-      { start: 1.1 * windowHeight, end: 2.1 * windowHeight }, // Section 3: What if not a developer
-      { start: 1.9 * windowHeight, end: 2.9 * windowHeight }, // Section 4: Card content animations
-      { start: 2.8 * windowHeight, end: 3.8 * windowHeight }, // Section 5: Resume scroll progress
+      { start: 0, end: 0.5 * windowHeight },
+      { start: 0.3 * windowHeight, end: 1.3 * windowHeight },
+      { start: 1.1 * windowHeight, end: 2.1 * windowHeight },
+      { start: 1.9 * windowHeight, end: 2.9 * windowHeight },
+      { start: 2.8 * windowHeight, end: 3.8 * windowHeight },
     ];
-
-    sectionProgress = sections.map(({ start, end }) => {
+    
+    const baseProgress = sections.map(({ start, end }) => {
       return Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
     });
+    sectionProgress = baseProgress;
   };
-
-  // 카드 내용 변수화
+  
+  const handleMouseMove = (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  };
+  
   let cardContents = [
-    { title: 'CloudiA 쿠버네티스 서비스', description: '프라이빗 클라우드 솔루션 CloudiA의 쿠버네티스 서비스 아키텍처 설계 및 에이전트 개발' },
-    { title: 'CloudiA 알파폴드 서비스', description: 'DeepMind의 단백질 구조 예측 AI인 AlphaFold2를 손쉽게 배포 및 활용하는 서비스 개발' },
-    { title: '전략기획 업무', description: '그룹사 계열사 경영전략팀 근무 경력. 기술 뿐만 아니라 비즈니스적인 시야를 보유하고 시장의 흐름과 회사의 상황과 맞는 사고 가능' },
+    { 
+      title: 'CloudiA Kubernetes', 
+      subtitle: 'Infrastructure',
+      description: '프라이빗 클라우드 솔루션 CloudiA의 쿠버네티스 서비스 아키텍처 설계 및 에이전트 개발',
+      icon: '☸️'
+    },
+    { 
+      title: 'CloudiA AlphaFold', 
+      subtitle: 'AI Service',
+      description: 'DeepMind의 단백질 구조 예측 AI인 AlphaFold2를 손쉽게 배포 및 활용하는 서비스 개발',
+      icon: '🧬'
+    },
+    { 
+      title: 'Business Strategy', 
+      subtitle: 'Management',
+      description: '그룹사 계열사 경영전략팀 근무 경력. 기술과 비즈니스의 균형잡힌 시각으로 전략 수립',
+      icon: '📊'
+    },
   ];
-
+  
+  // Hero texts
+  let titleText = '속도로 증명하는 AI 네이티브 해결사';
+  
   onMount(() => {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    // start subtitle typewriter loop
+    const typeSubtitle = () => {
+      const currentText = subtitleTexts[subtitleCurrentIndex] || '';
+      if (subtitleIsDeleting) {
+        subtitleDisplay = currentText.substring(0, subtitleDisplay.length - 1);
+        if (subtitleDisplay === '') {
+          subtitleIsDeleting = false;
+          subtitleCurrentIndex = (subtitleCurrentIndex + 1) % subtitleTexts.length;
+          subtitleTypingTimer = setTimeout(typeSubtitle, subtitleEmptyPauseMs);
+          return;
+        }
+        subtitleTypingTimer = setTimeout(typeSubtitle, subtitleDeleteSpeed);
+      } else {
+        subtitleDisplay = currentText.substring(0, subtitleDisplay.length + 1);
+        if (subtitleDisplay === currentText) {
+          subtitleTypingTimer = setTimeout(() => {
+            subtitleIsDeleting = true;
+            typeSubtitle();
+          }, subtitlePauseMs);
+          return;
+        }
+        subtitleTypingTimer = setTimeout(typeSubtitle, subtitleTypeSpeed);
+      }
+    };
+    typeSubtitle();
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (subtitleTypingTimer) clearTimeout(subtitleTypingTimer);
+    };
   });
+  
+  // Smooth scroll to section
+  const scrollToSection = (sectionIndex) => {
+    window.scrollTo({
+      top: window.innerHeight * sectionIndex,
+      behavior: 'smooth'
+    });
+  };
 </script>
 
-<main class="relative overflow-hidden font-pretendard">
-  <!-- Section 1: Welcome message and scroll down indicator -->
-  <section class="h-[100vh] relative">
+<svelte:window on:scroll={handleScroll} />
+
+<main class="relative overflow-hidden bg-white">
+  <!-- Mouse gradient spotlight -->
+  <div 
+    class="pointer-events-none fixed inset-0 z-0 transition-opacity duration-1000"
+    style="opacity: {0.03}; background: radial-gradient(600px circle at {mouseX}px {mouseY}px, rgba(0, 102, 255, 0.06), transparent 40%);"
+  ></div>
+  
+  
+  
+  <!-- Section 1: Hero with refined animation -->
+  <section class="h-[100vh] relative flex items-center justify-center" bind:this={section2El}>
     <div
-      class="sticky top-0 h-screen flex items-center justify-center flex-col"
+      class="text-center px-4"
       style="opacity: {1 - sectionProgress[0]}; transform: translateY({-10 + sectionProgress[0] * -20}vh); transition: opacity 0.5s, transform 0.5s;"
     >
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-        제 프로필에 오신 것을 환영합니다.
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-thin text-primary-black mb-6">
+        {#each titleText.split(' ') as word, i}
+          <span 
+            class="inline-block animate-fade-up"
+            style="animation-delay: {i * 0.1}s;"
+          >
+            {word}
+          </span>{' '}
+        {/each}
       </h1>
+      
+      <p class="text-lg md:text-xl text-primary-gray font-light animate-fade-in" style="animation-delay: 0.5s;">
+        {subtitleDisplay}
+        <span class="opacity-60">|</span>
+      </p>
+      
+      
+      
+      <!-- Elegant scroll indicator -->
       <div
-        class="flex flex-col items-center mt-4 text-gray-700 text-sm opacity-80 transition-opacity duration-500"
-        style="opacity: {1 - sectionProgress[0]};"
+        class="mt-20 flex flex-col items-center animate-fade-in"
+        style="animation-delay: 1s; opacity: {1 - sectionProgress[0]}; transition: opacity 0.5s;"
       >
-        <span>Scroll Down</span>
+        <div class="w-[1px] h-20 bg-gradient-to-b from-transparent via-primary-black to-transparent opacity-20 animate-pulse"></div>
         <svg
-          class="w-6 h-6 mt-1 text-gray-700 animate-bounce cursor-pointer"
+          class="w-5 h-5 mt-2 text-primary-gray animate-bounce"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          on:click={() => window.scrollTo({ top: window.innerHeight * 1.1, behavior: 'smooth' })}
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
     </div>
   </section>
-
-  <!-- Section 2: Adjusted timing for earlier start -->
-  <section class="h-[100vh] relative">
+  
+  <!-- Section 2: Split text with refined timing -->
+  <section class="h-[100vh] relative flex items-center justify-center">
     <div
-      class="sticky top-0 h-screen flex items-center justify-center"
+      class="max-w-5xl mx-auto px-6 lg:px-8"
       style="opacity: {sectionProgress[1]}; transition: opacity 0.4s;"
     >
-      <div class="relative w-full h-full flex items-center justify-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div
-          class="absolute left-0 top-1/2 w-1/2 transform transition-transform duration-700"
-          style="transform: translateY({-20 + sectionProgress[1] * 20}vh);"
+          class="text-right"
+          style="transform: translateY({-16 + sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
-          <h2 class="text-4xl font-semibold text-gray-900 text-right pr-4">
-            홈페이지를 만들었네요,<br />
-            개발자인가요?
+          <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
+            홈페이지를<br />
+            만들었네요,<br />
+            <span class="font-light">개발자인가요?</span>
           </h2>
         </div>
+        
         <div
-          class="absolute right-0 top-1/2 w-1/2 transform transition-transform duration-700"
-          style="transform: translateY({20 - sectionProgress[1] * 20}vh);"
+          class="text-left"
+          style="transform: translateY({16 - sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
-          <h2 class="text-4xl font-semibold text-gray-900 text-left pl-4">
-            <br /><br />놀라운 가치를<br />
-            누구보다 빠르게 <br />
+          <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
+            놀라운 가치를<br />
+            누구보다 빠르게<br />
             만들어내고 있어요<br />
-            모두 다 AI 덕분이죠.
+            <span class="text-primary-gray text-xl">모두 AI 덕분이죠</span>
           </h2>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Section 3: Animations complete when centered -->
-  <section class="h-[100vh] relative">
-    <div class="sticky top-0 h-screen flex items-center justify-center flex-col">
-      <div
-        class="text-center"
+  
+  <!-- Section 3: Capability showcase -->
+  <section class="h-[100vh] relative flex items-center justify-center">
+    <div class="text-center max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 
+        class="text-2xl md:text-3xl font-thin text-primary-black mb-8"
         style="transform: translateY({5 - sectionProgress[2] * 15}vh); opacity: {sectionProgress[2] >= 0 ? 1 : 0}; transition: transform 0.3s;"
       >
-        <h2 class="text-3xl font-semibold text-gray-900 mb-4">무엇을 할 수 있나요?</h2>
-      </div>
+        무엇을 할 수 있나요?
+      </h2>
+      
       <div
-        class="text-center"
-        style="transform: translateY({50 - sectionProgress[2] * 50}vh); opacity: {Math.min(Math.max((sectionProgress[2] - 0.3) * 2, 0), 1)}; transition: transform 0.3s, opacity 0.3s;"
+        style="opacity: {Math.min(Math.max((sectionProgress[2] - 0.3) * 2, 0), 1)}; transition: opacity 0.3s;"
       >
-        <h2 class="text-4xl font-semibold text-gray-900">개인의 능력 범위에 한계를 정할 수 없죠. AI 시대잖아요?</h2>
+        <h2 
+          class="text-2xl md:text-4xl font-thin text-primary-black leading-relaxed"
+          style="transform: translateY({20 - sectionProgress[2] * 20}vh); transition: transform 0.3s;"
+        >
+          개인의 능력 범위에<br />
+          <span class="font-light">한계를 정할 수 없죠</span><br />
+          <span class="text-xl md:text-2xl text-primary-gray">AI 시대잖아요</span>
+        </h2>
       </div>
     </div>
   </section>
-
-  <!-- Section 4: Cards with animations and section title -->
-  <section class="h-[100vh] relative">
+  
+  <!-- Section 4: Project cards with glass effect -->
+  <section class="h-[100vh] relative flex items-center justify-center">
     <div
-      class="sticky top-0 h-screen flex items-center justify-center flex-col"
+      class="max-w-6xl mx-auto px-6 lg:px-8"
       style="opacity: {sectionProgress[3]}; transition: opacity 0.3s;"
     >
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">프로젝트</h2>
-      <div class="grid grid-cols-2 gap-8">
-        {#each cardContents as { title, description }, index}
-            <div
-            class="w-96 p-12 bg-gray-50 rounded-lg shadow-lg transform transition-transform duration-500"
-            style="transform: translateY({(1 - sectionProgress[3]) * 20}vh) rotateY({(1 - sectionProgress[3]) * (index % 2 === 0 ? -20 : 20)}deg); opacity: {sectionProgress[3]};"
-            >
-            <h3 class="text-2xl font-semibold text-gray-900 mb-4">{title}</h3>
-            <p class="text-gray-600 mt-4">{description}</p>
+      <h2 class="text-3xl md:text-4xl font-thin text-primary-black text-center mb-12 tracking-wide">
+        Projects
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {#each cardContents as { title, subtitle, description, icon }, index}
+          <div
+            class="group relative bg-white border border-gray-100 rounded-2xl p-6 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer"
+            style="transform: translateY({(1 - sectionProgress[3]) * 20}vh) rotateY({(1 - sectionProgress[3]) * (index % 2 === 0 ? -20 : 20)}deg); opacity: {sectionProgress[3]}; transition: transform 0.5s, opacity 0.5s;"
+          >
+            <!-- Glass overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-br from-glass-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+            
+            <div class="relative z-10">
+              <div class="text-4xl mb-4">{icon}</div>
+              <p class="text-xs uppercase tracking-super-wide text-primary-gray mb-2">{subtitle}</p>
+              <h3 class="text-xl font-light text-primary-black mb-4 tracking-wide">{title}</h3>
+              <p class="text-sm text-primary-gray leading-relaxed">{description}</p>
             </div>
+            
+            <!-- Subtle border glow on hover -->
+            <div class="absolute inset-0 rounded-2xl border border-accent-blue opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+          </div>
         {/each}
       </div>
     </div>
   </section>
-
-  <!-- Section 5: Simple resume section -->
-  <section class="py-16 pb-24">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl font-bold mb-8">Simple Resume</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  
+  <!-- Section 5: Simple resume preview -->
+  <section class="py-32">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-thin mb-16 text-primary-black tracking-wide">Simple Resume</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 text-left">
         <!-- Experience -->
-        <div>
-          <h3 class="text-2xl font-semibold mb-4">Experience</h3>
-          <ul class="text-gray-700">
-            <li class="mb-3">
-              <strong>TmaxCloud</strong><br />
-              2023.12 - 2025.2<br />
-              전략마케팅실/경영전략팀 팀원
-            </li>
-                        <li class="mb-3">
-              <strong>iAcloud</strong><br />
-              2025.2 - 현재<br />
-              전임 연구원
-            </li>
-          </ul>
+        <div class="animate-fade-up">
+          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">Experience</h3>
+          <div class="space-y-8">
+            <div class="group">
+              <div class="flex items-start gap-4">
+                <div class="w-2 h-2 rounded-full bg-primary-black mt-2 group-hover:scale-150 transition-transform"></div>
+                <div>
+                  <h4 class="font-light text-lg text-primary-black">TmaxCloud</h4>
+                  <p class="text-sm text-primary-gray mt-1">경영전략팀</p>
+                  <p class="text-xs text-primary-gray mt-2 tracking-wide">2023.12 — 2025.02</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="group">
+              <div class="flex items-start gap-4">
+                <div class="w-2 h-2 rounded-full bg-primary-black mt-2 group-hover:scale-150 transition-transform"></div>
+                <div>
+                  <h4 class="font-light text-lg text-primary-black">iAcloud</h4>
+                  <p class="text-sm text-primary-gray mt-1">개발팀 / 전임 연구원</p>
+                  <p class="text-xs text-primary-gray mt-2 tracking-wide">2025.02 — Present</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        
         <!-- Skills -->
-        <div>
-          <h3 class="text-2xl font-semibold mb-4">Skills</h3>
-          <ul class="text-gray-700">
-            <li>AI 활용 능력</li>
-            <li>컴퓨터 공학 기초 지식</li>
-            <li>클라우드 및 IT인프라 관련 지식</li>
-            <li>비즈니스 영어</li>
-            <li>경영 전략 업무</li>
-          </ul>
+        <div class="animate-fade-up" style="animation-delay: 0.2s;">
+          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">Expertise</h3>
+          <div class="space-y-3">
+            {#each ['AI Driven Development', 'Cloud Architecture', 'Kubernetes Orchestration', 'Business Strategy', 'Technical Leadership'] as skill}
+              <div class="group flex items-center gap-3">
+                <div class="w-1 h-1 rounded-full bg-primary-gray group-hover:bg-accent-blue transition-colors"></div>
+                <span class="text-sm text-primary-black font-light tracking-wide">{skill}</span>
+              </div>
+            {/each}
+          </div>
+        </div>
       </div>
-        </div>
-        <!-- Button to navigate to /resume -->
-        <div class="mt-8 flex justify-center">
-          <a href="/resume" class="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden">
-            <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            <span class="relative flex items-center gap-2">
-              View Full Resume
-              <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </span>
-          </a>
-        </div>
+      
+      <!-- CTA Button -->
+      <div class="mt-20 animate-fade-up" style="animation-delay: 0.4s;">
+        <a 
+          href="/resume" 
+          class="group inline-flex items-center gap-3 px-10 py-4 border border-primary-black text-primary-black rounded-full hover:bg-primary-black hover:text-white transition-all duration-500"
+        >
+          <span class="font-light tracking-wide">View Full Resume</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 </main>
 
-
-
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
-
-  main {
-    height: 470vh; /* Adjusted to accommodate five sections without extra space */
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@100;200;300;400;500&display=swap');
+  
+  :global(body) {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    overscroll-behavior: none;
   }
-
-  .font-pretendard {
-    font-family: 'Pretendard', sans-serif;
+  
+  :global(::selection) {
+    background-color: rgba(0, 102, 255, 0.1);
+    color: #0066FF;
+  }
+  
+  main {
+    height: 500vh;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+    opacity: 0;
   }
 </style>
