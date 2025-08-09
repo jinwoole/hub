@@ -3,7 +3,7 @@
     // Pretendard 폰트 설정
     const profile = {
       name: "이진우",
-      title: "iAcloud에서 하루가 다르게 성장하고 있는 개발자",
+      title: "AI Native Developer 1세대",
       location: "서울, 대한민국",
       email: "jinwoolee42@outlook.com",
       linkedin: "https://www.linkedin.com/in/jinwoo-lee-profile/"
@@ -24,9 +24,8 @@
         company: "iAcloud",
         duration: "2025.2 - 현재",
         details: [
-          "프라이빗 클라우드, CloudiA 위의 쿠버네티스 서비스 플랫폼 부분 개발",
-          "LLM DevOps 플랫폼, GeniA 개발",
-          "그 외 다수"
+          "CloudiA Kubernetes Service 설계 및 개발",
+          "CloudiA AlphaFold2 서비스(가칭) 설계 및 개발"
         ]
       }
 
@@ -45,13 +44,6 @@
   
     const skills = ["AI Driven Development", "Software Architecting", "Kubernetes", "AWS", "Business Developement"];
   
-    const projects = [
-      {
-        name: "할 것",
-        description: "앞으로 흥미로운게 많아질 것",
-        link: "/projects/profile-website"
-      }
-    ];
 </script>
 
 <section class="py-12 font-pretendard">
@@ -123,21 +115,6 @@
       </div>
     </div>
 
-    <!-- Projects Section -->
-    <div>
-      <h2 class="text-2xl font-semibold mb-4">
-        <span class="bg-yellow-200 px-1 rounded">프로젝트</span>
-      </h2>
-      {#each projects as project}
-        <div class="mb-4">
-          <h3 class="text-lg font-semibold text-gray-900">
-            <a href="{project.link}" class="hover:underline text-indigo-600">{project.name}</a>
-          </h3>
-          <p class="text-gray-700">{project.description}</p>
-        </div>
-      {/each}
-    </div>
-  </div>
 </section>
 
 <style>

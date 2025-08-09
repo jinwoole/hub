@@ -22,9 +22,9 @@
 
   // 카드 내용 변수화
   let cardContents = [
-    { title: 'AI활용 개발', description: '어떤 임무가 주어지든 빠르게 큰 그림을 이해하고 AI를 활용한 프로덕션 수준의 설계 및 구현 가능. 프라이빗 클라우드/쿠버네티스/LLM 분야 솔루션 개발 중' },
-    { title: '글로벌 업무', description: '업무에 활용 가능한 수준의 영어. 글로벌 파트너십 업무 지원 및 회사 및 제품소개서, IR자료 등 번역 경험' },
-    { title: '전략기획 업무', description: '그룹사 계열사 경영전략팀 근무 경력 보유. 기술 뿐만 아니라 비즈니스적인 시야를 보유하고 시장의 흐름과 회사의 상황과 맞는 사고 가능' },
+    { title: 'CloudiA 쿠버네티스 서비스', description: '프라이빗 클라우드 솔루션 CloudiA의 쿠버네티스 서비스 아키텍처 설계 및 에이전트 개발' },
+    { title: 'CloudiA 알파폴드 서비스', description: 'DeepMind의 단백질 구조 예측 AI인 AlphaFold2를 손쉽게 배포 및 활용하는 서비스 개발' },
+    { title: '전략기획 업무', description: '그룹사 계열사 경영전략팀 근무 경력. 기술 뿐만 아니라 비즈니스적인 시야를 보유하고 시장의 흐름과 회사의 상황과 맞는 사고 가능' },
   ];
 
   onMount(() => {
@@ -83,7 +83,9 @@
           style="transform: translateY({20 - sectionProgress[1] * 20}vh);"
         >
           <h2 class="text-4xl font-semibold text-gray-900 text-left pl-4">
-            <br /><br />놀라운 가치를 만들어내고 있어요<br />
+            <br /><br />놀라운 가치를<br />
+            누구보다 빠르게 <br />
+            만들어내고 있어요<br />
             모두 다 AI 덕분이죠.
           </h2>
         </div>
@@ -98,13 +100,13 @@
         class="text-center"
         style="transform: translateY({5 - sectionProgress[2] * 15}vh); opacity: {sectionProgress[2] >= 0 ? 1 : 0}; transition: transform 0.3s;"
       >
-        <h2 class="text-3xl font-semibold text-gray-900 mb-4">무엇을 만들 수 있나요?</h2>
+        <h2 class="text-3xl font-semibold text-gray-900 mb-4">무엇을 할 수 있나요?</h2>
       </div>
       <div
         class="text-center"
         style="transform: translateY({50 - sectionProgress[2] * 50}vh); opacity: {Math.min(Math.max((sectionProgress[2] - 0.3) * 2, 0), 1)}; transition: transform 0.3s, opacity 0.3s;"
       >
-        <h2 class="text-4xl font-semibold text-gray-900">상상할 수 있는 것이면 모두 시도해 볼 수 있죠.</h2>
+        <h2 class="text-4xl font-semibold text-gray-900">개인의 능력 범위에 한계를 정할 수 없죠. AI 시대잖아요?</h2>
       </div>
     </div>
   </section>
@@ -115,7 +117,7 @@
       class="sticky top-0 h-screen flex items-center justify-center flex-col"
       style="opacity: {sectionProgress[3]}; transition: opacity 0.3s;"
     >
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">Usecases</h2>
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">프로젝트</h2>
       <div class="grid grid-cols-2 gap-8">
         {#each cardContents as { title, description }, index}
             <div
@@ -147,7 +149,7 @@
                         <li class="mb-3">
               <strong>iAcloud</strong><br />
               2025.2 - 현재<br />
-              전임 디벨로퍼
+              전임 연구원
             </li>
           </ul>
         </div>
@@ -155,8 +157,8 @@
         <div>
           <h3 class="text-2xl font-semibold mb-4">Skills</h3>
           <ul class="text-gray-700">
+            <li>AI 활용 능력</li>
             <li>컴퓨터 공학 기초 지식</li>
-            <li>AI 활용 개발</li>
             <li>클라우드 및 IT인프라 관련 지식</li>
             <li>비즈니스 영어</li>
             <li>경영 전략 업무</li>

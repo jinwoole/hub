@@ -24,61 +24,6 @@
 
     <!-- 기존 내비게이션 유지 -->
     <div class="flex gap-x-4 sm:gap-x-6 lg:gap-x-12">
-      <!-- Products 드롭다운을 위한 컨테이너 (임시로 숨김) -->
-      <!-- 
-      <div 
-        class="relative inline-block" 
-        on:mouseenter={() => isProductsDropdownOpen = true} 
-        on:mouseleave={() => isProductsDropdownOpen = false}
-      >
-        <button
-          type="button"
-          class="flex items-center gap-x-1 text-sm sm:text-base font-semibold leading-6 text-gray-900 focus:outline-none"
-          aria-expanded={isProductsDropdownOpen}
-        >
-          Products
-          <svg class="h-4 w-4 sm:h-5 sm:w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-          </svg>
-        </button>
-
-        <div
-          class="absolute left-0 top-full z-10 mt-0 w-60 sm:w-screen sm:max-w-md overflow-hidden rounded-lg sm:rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition-all duration-200 transform"
-          class:opacity-100={isProductsDropdownOpen}
-          class:opacity-0={!isProductsDropdownOpen}
-          class:translate-y-0={isProductsDropdownOpen}
-          class:-translate-y-1={!isProductsDropdownOpen}
-          class:pointer-events-auto={isProductsDropdownOpen}
-          class:pointer-events-none={!isProductsDropdownOpen}
-        >
-          <div class="p-3 sm:p-4">
-            <a href="/products/dailynews" class="group relative flex items-center gap-x-4 sm:gap-x-6 rounded-md sm:rounded-lg p-3 sm:p-4 text-sm leading-5 sm:leading-6 hover:bg-gray-50">
-              <div class="flex h-10 w-10 sm:h-11 sm:w-11 flex-none items-center justify-center rounded-md sm:rounded-lg bg-gray-50 group-hover:bg-white">
-                <svg class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 3.75H4.5a2.25 2.25 0 0 0-2.25 2.25v12a2.25 2.25 0 0 0 2.25 2.25h15a2.25 2.25 0 0 0 2.25-2.25v-12a2.25 2.25 0 0 0-2.25-2.25ZM4.5 6h15v12h-15V6Zm3 3h9v1.5H7.5V9Zm0 3h9v1.5H7.5V12Zm0 3h6v1.5H7.5V15Z" />
-                </svg>
-              </div>
-              <div class="flex-auto">
-                <p class="block font-semibold text-gray-900">Daily News for TmaxCloud <span class="absolute inset-0"></span></p>
-                <p class="mt-1 text-gray-600">빠르고 정확한 뉴스레터 작성</p>
-              </div>
-            </a>
-            <a href="/products/insights" class="group relative flex items-center gap-x-4 sm:gap-x-6 rounded-md sm:rounded-lg p-3 sm:p-4 text-sm leading-5 sm:leading-6 hover:bg-gray-50">
-              <div class="flex h-10 w-10 sm:h-11 sm:w-11 flex-none items-center justify-center rounded-md sm:rounded-lg bg-gray-50 group-hover:bg-white">
-                <svg class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-                </svg>
-              </div>
-              <div class="flex-auto">
-                <p class="block font-semibold text-gray-900">Insights <span class="absolute inset-0"></span></p>
-                <p class="mt-1 text-gray-600">수집한 데이터, 새로운 통찰로 </p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      -->
-
       <!-- Resume 링크 -->
       <a href="/resume" class="text-sm sm:text-base font-semibold leading-6 text-gray-900">Resume</a>
     </div>
