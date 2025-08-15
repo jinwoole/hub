@@ -3,6 +3,7 @@
   import "../app.css";
   import { fade, fly } from 'svelte/transition';
   import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   
   let isDrawerOpen = false;
   let scrollY = 0;
@@ -45,11 +46,18 @@
 
     <!-- 기존 내비게이션 유지 -->
     <div class="flex gap-x-4 sm:gap-x-6 lg:gap-x-12">
-      <!-- Resume 링크 -->
-      <a href="/resume" class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300">
-        Resume
-        <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
-      </a>
+      <!-- Resume/Home 링크 -->
+      {#if $page.url.pathname === '/resume'}
+        <a href="/" class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300">
+          Home
+          <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
+        </a>
+      {:else}
+        <a href="/resume" class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300">
+          Resume
+          <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
+        </a>
+      {/if}
     </div>
 
     <!-- Contact 버튼을 클릭하면 드로어 열림 -->

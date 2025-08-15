@@ -111,12 +111,35 @@
     };
   });
   
-  // Smooth scroll to section
+  // Smooth scroll to section with custom easing
   const scrollToSection = (sectionIndex) => {
-    window.scrollTo({
-      top: window.innerHeight * sectionIndex,
-      behavior: 'smooth'
-    });
+    const targetY = window.innerHeight * sectionIndex;
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const duration = 1200; // 1.2초로 늘림
+    let startTime = null;
+    
+    // Easing function for smooth acceleration and deceleration
+    const easeInOutCubic = (t) => {
+      return t < 0.5 
+        ? 4 * t * t * t 
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+    
+    const animation = (currentTime) => {
+      if (startTime === null) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const easedProgress = easeInOutCubic(progress);
+      window.scrollTo(0, startY + distance * easedProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animation);
+      }
+    };
+    
+    requestAnimationFrame(animation);
   };
 </script>
 
@@ -156,9 +179,10 @@
       
       
       <!-- Elegant scroll indicator -->
-      <div
-        class="mt-20 flex flex-col items-center animate-fade-in"
-        style="animation-delay: 1s; opacity: {1 - sectionProgress[0]}; transition: opacity 0.5s;"
+      <button
+        class="mt-20 flex flex-col items-center animate-fade-in cursor-pointer hover:scale-110 transition-transform mx-auto"
+        style="animation-delay: 1s; opacity: {1 - sectionProgress[0]}; transition: opacity 0.5s, transform 0.2s;"
+        on:click={() => scrollToSection(1)}
       >
         <div class="w-[1px] h-20 bg-gradient-to-b from-transparent via-primary-black to-transparent opacity-20 animate-pulse"></div>
         <svg
@@ -169,7 +193,7 @@
         >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </button>
     </div>
   </section>
   
@@ -181,7 +205,7 @@
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div
-          class="text-right"
+          class="text-left md:text-right"
           style="transform: translateY({-16 + sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
           <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
@@ -192,10 +216,11 @@
         </div>
         
         <div
-          class="text-left"
+          class="text-right md:text-left"
           style="transform: translateY({16 - sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
           <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
+            <span class="font-light">그럼요.</span><br />
             놀라운 가치를<br />
             누구보다 빠르게<br />
             만들어내고 있어요<br />
@@ -303,7 +328,7 @@
         <div class="animate-fade-up" style="animation-delay: 0.2s;">
           <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">Expertise</h3>
           <div class="space-y-3">
-            {#each ['AI Driven Development', 'Cloud Architecture', 'Kubernetes Orchestration', 'Business Strategy', 'Technical Leadership'] as skill}
+            {#each ['AI Driven Development', 'Cloud Architecture', 'Business Strategy', 'Technical Leadership'] as skill}
               <div class="group flex items-center gap-3">
                 <div class="w-1 h-1 rounded-full bg-primary-gray group-hover:bg-accent-blue transition-colors"></div>
                 <span class="text-sm text-primary-black font-light tracking-wide">{skill}</span>
@@ -330,7 +355,11 @@
 </main>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@100;200;300;400;500&display=swap');
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  
+  :global(html) {
+    scroll-behavior: smooth;
+  }
   
   :global(body) {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;

@@ -21,7 +21,6 @@
       details: [
         "CloudiA Kubernetes Service 설계 및 개발",
         "CloudiA AlphaFold2 서비스 설계 및 개발",
-        "프라이빗 클라우드 인프라 아키텍처 구축"
       ],
       current: true
     },
@@ -79,8 +78,8 @@
   ];
 
   const skills = {
-    "Technical": ["AI Driven Development", "Kubernetes", "Cloud Architecture", "Infrastructure as Code"],
-    "Business": ["Strategic Planning", "Market Research", "Partnership Development", "Project Management"],
+    "Technical": ["AI Driven Development", "Kubernetes", "Cloud Architecture", "AI Workload"],
+    "Business": ["Strategic Planning", "Market Research"],
     "Languages": ["Korean (Native)", "English (Business)"]
   };
   
@@ -268,7 +267,7 @@
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@100;200;300;400&display=swap');
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   
   :global(::selection) {
     background-color: rgba(0, 102, 255, 0.1);
