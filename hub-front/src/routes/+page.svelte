@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import { language } from '$lib/stores/language';
+  import { t } from '$lib/translations';
   let scrollY = 0;
   let sectionProgress = [0, 0, 0, 0, 0];
   let mouseX = 0;
@@ -8,12 +10,7 @@
   let section2El;
   
   // Subtitle typewriter state
-  const subtitleTexts = [
-    '빠르게 만들고 더 빠르게 학습합니다.',
-    '작은 시작, 빠른 반복, 큰 임팩트.',
-    '빠르게 실험하고 과감히 수확합니다.',
-    '속도를 무기로, 결과로 증명합니다.'
-  ];
+  $: subtitleTexts = t($language, 'main.heroSubtitles');
   let subtitleDisplay = '';
   let subtitleIsDeleting = false;
   let subtitleCurrentIndex = 0;
@@ -49,34 +46,21 @@
     mouseY = e.clientY;
   };
   
-  let cardContents = [
-    { 
-      title: 'CloudiA Kubernetes', 
-      subtitle: 'Infrastructure',
-      description: '프라이빗 클라우드 솔루션 CloudiA의 쿠버네티스 서비스 아키텍처 설계 및 에이전트 개발',
-      icon: '☸️'
-    },
-    { 
-      title: 'CloudiA AlphaFold', 
-      subtitle: 'AI Service',
-      description: 'DeepMind의 단백질 구조 예측 AI인 AlphaFold2를 손쉽게 배포 및 활용하는 서비스 개발',
-      icon: '🧬'
-    },
-    { 
-      title: 'Business Strategy', 
-      subtitle: 'Management',
-      description: '그룹사 계열사 경영전략팀 근무 경력. 기술과 비즈니스의 균형잡힌 시각으로 전략 수립',
-      icon: '📊'
-    },
-  ];
+  $: cardContents = t($language, 'main.projects.items');
   
   // Hero texts
-  let titleText = '속도로 증명하는 AI 네이티브 해결사';
+  $: titleText = t($language, 'main.heroTitle');
+  let isFirstLoad = true;
   
   onMount(() => {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
+    
+    // After animation completes, set isFirstLoad to false
+    setTimeout(() => {
+      isFirstLoad = false;
+    }, 1000);
     
     // start subtitle typewriter loop
     const typeSubtitle = () => {
@@ -160,16 +144,18 @@
       class="text-center px-4"
       style="opacity: {1 - sectionProgress[0]}; transform: translateY({-10 + sectionProgress[0] * -20}vh); transition: opacity 0.5s, transform 0.5s;"
     >
-      <h1 class="text-3xl md:text-5xl lg:text-6xl font-thin text-primary-black mb-6">
-        {#each titleText.split(' ') as word, i}
-          <span 
-            class="inline-block animate-fade-up"
-            style="animation-delay: {i * 0.1}s;"
-          >
-            {word}
-          </span>{' '}
-        {/each}
-      </h1>
+      {#key isFirstLoad}
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-thin text-primary-black mb-6">
+          {#each titleText.split(' ') as word, i}
+            <span 
+              class="inline-block {isFirstLoad ? 'animate-fade-up' : ''}"
+              style="{isFirstLoad ? `animation-delay: ${i * 0.1}s;` : ''}"
+            >
+              {word}
+            </span>{' '}
+          {/each}
+        </h1>
+      {/key}
       
       <p class="text-lg md:text-xl text-primary-gray font-light animate-fade-in" style="animation-delay: 0.5s;">
         {subtitleDisplay}
@@ -209,9 +195,9 @@
           style="transform: translateY({-16 + sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
           <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
-            홈페이지를<br />
-            만들었네요,<br />
-            <span class="font-light">개발자인가요?</span>
+            {t($language, 'main.section2.left.0')}<br />
+            {t($language, 'main.section2.left.1')}<br />
+            <span class="font-light">{t($language, 'main.section2.left.2')}</span>
           </h2>
         </div>
         
@@ -220,11 +206,11 @@
           style="transform: translateY({16 - sectionProgress[1] * 16}vh); transition: transform 0.7s;"
         >
           <h2 class="text-2xl md:text-4xl font-thin leading-tight text-primary-black">
-            <span class="font-light">그럼요.</span><br />
-            놀라운 가치를<br />
-            누구보다 빠르게<br />
-            만들어내고 있어요<br />
-            <span class="text-primary-gray text-xl">모두 AI 덕분이죠</span>
+            <span class="font-light">{t($language, 'main.section2.right.0')}</span><br />
+            {t($language, 'main.section2.right.1')}<br />
+            {t($language, 'main.section2.right.2')}<br />
+            {t($language, 'main.section2.right.3')}<br />
+            <span class="text-primary-gray text-xl">{t($language, 'main.section2.right.4')}</span>
           </h2>
         </div>
       </div>
@@ -238,7 +224,7 @@
         class="text-2xl md:text-3xl font-thin text-primary-black mb-8"
         style="transform: translateY({5 - sectionProgress[2] * 15}vh); opacity: {sectionProgress[2] >= 0 ? 1 : 0}; transition: transform 0.3s;"
       >
-        무엇을 할 수 있나요?
+        {t($language, 'main.section3.question')}
       </h2>
       
       <div
@@ -248,9 +234,9 @@
           class="text-2xl md:text-4xl font-thin text-primary-black leading-relaxed"
           style="transform: translateY({20 - sectionProgress[2] * 20}vh); transition: transform 0.3s;"
         >
-          개인의 능력 범위에<br />
-          <span class="font-light">한계를 정할 수 없죠</span><br />
-          <span class="text-xl md:text-2xl text-primary-gray">AI 시대잖아요</span>
+          {t($language, 'main.section3.answer.0')}<br />
+          <span class="font-light">{t($language, 'main.section3.answer.1')}</span><br />
+          <span class="text-xl md:text-2xl text-primary-gray">{t($language, 'main.section3.answer.2')}</span>
         </h2>
       </div>
     </div>
@@ -263,7 +249,7 @@
       style="opacity: {sectionProgress[3]}; transition: opacity 0.3s;"
     >
       <h2 class="text-3xl md:text-4xl font-thin text-primary-black text-center mb-12 tracking-wide">
-        Projects
+        {t($language, 'main.projects.title')}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -293,20 +279,20 @@
   <!-- Section 5: Simple resume preview -->
   <section class="py-32">
     <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-thin mb-16 text-primary-black tracking-wide">Simple Resume</h2>
+      <h2 class="text-3xl md:text-4xl font-thin mb-16 text-primary-black tracking-wide">{t($language, 'main.simpleResume.title')}</h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16 text-left">
         <!-- Experience -->
         <div class="animate-fade-up">
-          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">Experience</h3>
+          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">{t($language, 'main.simpleResume.experience')}</h3>
           <div class="space-y-8">
             <div class="group">
               <div class="flex items-start gap-4">
                 <div class="w-2 h-2 rounded-full bg-primary-black mt-2 group-hover:scale-150 transition-transform"></div>
                 <div>
-                  <h4 class="font-light text-lg text-primary-black">TmaxCloud</h4>
-                  <p class="text-sm text-primary-gray mt-1">경영전략팀</p>
-                  <p class="text-xs text-primary-gray mt-2 tracking-wide">2023.12 — 2025.02</p>
+                  <h4 class="font-light text-lg text-primary-black">{t($language, 'main.simpleResume.companies.0.name')}</h4>
+                  <p class="text-sm text-primary-gray mt-1">{t($language, 'main.simpleResume.companies.0.team')}</p>
+                  <p class="text-xs text-primary-gray mt-2 tracking-wide">{t($language, 'main.simpleResume.companies.0.duration')}</p>
                 </div>
               </div>
             </div>
@@ -315,9 +301,9 @@
               <div class="flex items-start gap-4">
                 <div class="w-2 h-2 rounded-full bg-primary-black mt-2 group-hover:scale-150 transition-transform"></div>
                 <div>
-                  <h4 class="font-light text-lg text-primary-black">iAcloud</h4>
-                  <p class="text-sm text-primary-gray mt-1">개발팀 / 전임 연구원</p>
-                  <p class="text-xs text-primary-gray mt-2 tracking-wide">2025.02 — Present</p>
+                  <h4 class="font-light text-lg text-primary-black">{t($language, 'main.simpleResume.companies.1.name')}</h4>
+                  <p class="text-sm text-primary-gray mt-1">{t($language, 'main.simpleResume.companies.1.team')}</p>
+                  <p class="text-xs text-primary-gray mt-2 tracking-wide">{t($language, 'main.simpleResume.companies.1.duration')}</p>
                 </div>
               </div>
             </div>
@@ -326,9 +312,9 @@
         
         <!-- Skills -->
         <div class="animate-fade-up" style="animation-delay: 0.2s;">
-          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">Expertise</h3>
+          <h3 class="text-xs uppercase tracking-super-wide text-primary-gray mb-8">{t($language, 'main.simpleResume.expertise')}</h3>
           <div class="space-y-3">
-            {#each ['AI Driven Development', 'Cloud Architecture', 'Business Strategy', 'Technical Leadership'] as skill}
+            {#each t($language, 'main.simpleResume.skills') as skill}
               <div class="group flex items-center gap-3">
                 <div class="w-1 h-1 rounded-full bg-primary-gray group-hover:bg-accent-blue transition-colors"></div>
                 <span class="text-sm text-primary-black font-light tracking-wide">{skill}</span>
@@ -344,7 +330,7 @@
           href="/resume" 
           class="group inline-flex items-center gap-3 px-10 py-4 border border-primary-black text-primary-black rounded-full hover:bg-primary-black hover:text-white transition-all duration-500"
         >
-          <span class="font-light tracking-wide">View Full Resume</span>
+          <span class="font-light tracking-wide">{t($language, 'main.simpleResume.viewFull')}</span>
           <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>

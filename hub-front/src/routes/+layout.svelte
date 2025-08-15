@@ -4,13 +4,15 @@
   import { fade, fly } from 'svelte/transition';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
+  import { language } from '$lib/stores/language';
+  import { t } from '$lib/translations';
   
   let isDrawerOpen = false;
   let scrollY = 0;
   let isScrolled = false;
   
-  const contactName = "이진우";
-  const contactEmail = "jinwoolee42@outlook.com";
+  $: contactName = t($language, 'contact.name');
+  $: contactEmail = t($language, 'contact.email');
   const contactLinkedIn = "www.linkedin.com/in/jinwoo-lee-profile";
   
   onMount(() => {
@@ -49,22 +51,31 @@
       <!-- Resume/Home 링크 -->
       {#if $page.url.pathname === '/resume'}
         <a href="/" class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300">
-          Home
+          {t($language, 'nav.home')}
           <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
         </a>
       {:else}
         <a href="/resume" class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300">
-          Resume
+          {t($language, 'nav.resume')}
           <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
         </a>
       {/if}
     </div>
 
     <!-- Contact 버튼을 클릭하면 드로어 열림 -->
-    <div class="flex flex-1 justify-end">
+    <div class="flex flex-1 justify-end gap-x-4 sm:gap-x-6">
+      <!-- Language Toggle -->
+      <button
+        type="button"
+        on:click={() => language.toggleLanguage()}
+        class="relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-colors duration-300 underline underline-offset-4 decoration-1"
+      >
+        {$language === 'ko' ? 'EN' : 'KR'}
+      </button>
+      
       <button type="button" on:click={() => isDrawerOpen = true} class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-all duration-300">
         <span class="flex items-center gap-1">
-          Contact
+          {t($language, 'nav.contact')}
           <span aria-hidden="true" class="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
         </span>
       </button>
@@ -80,7 +91,7 @@
 <div class="flex justify-end mt-16 mr-4 sm:mr-6 lg:mr-8 mb-16">
   <button type="button" on:click={() => isDrawerOpen = true} class="group relative text-sm sm:text-base font-light tracking-wide leading-6 text-primary-black hover:text-accent-blue transition-all duration-300">
     <span class="flex items-center gap-1">
-      Contact
+      {t($language, 'nav.contact')}
       <span aria-hidden="true" class="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
     </span>
   </button>
@@ -124,7 +135,7 @@
 
             <div class="flex h-full flex-col overflow-y-scroll bg-glass-white backdrop-blur-xl border-l border-glass-border py-6 shadow-2xl">
               <div class="px-4 sm:px-6">
-                <h2 class="text-lg font-light tracking-wider text-primary-black" id="slide-over-title">Contact</h2>
+                <h2 class="text-lg font-light tracking-wider text-primary-black" id="slide-over-title">{t($language, 'contact.title')}</h2>
               </div>
               <div class="relative mt-6 flex-1 px-4 sm:px-6">
                 <!-- 연락처 정보 -->
@@ -142,7 +153,7 @@
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
-                    LinkedIn Profile
+                    {t($language, 'contact.linkedin')}
                   </a>
                 </div>
               </div>

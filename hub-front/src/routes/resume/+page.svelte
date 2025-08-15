@@ -2,86 +2,27 @@
 <script>
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
+  import { language } from '$lib/stores/language';
+  import { t } from '$lib/translations';
   
-  const profile = {
-    name: "이진우",
-    title: "AI Native Developer",
-    location: "Seoul, South Korea",
-    email: "jinwoolee42@outlook.com",
+  $: profile = {
+    name: t($language, 'resume.profile.name'),
+    title: t($language, 'resume.profile.title'),
+    location: t($language, 'resume.profile.location'),
+    email: t($language, 'contact.email'),
     linkedin: "https://www.linkedin.com/in/jinwoo-lee-profile/"
   };
 
-  const experiences = [
-    {
-      position: "전임 연구원",
-      team: "개발팀",
-      company: "iAcloud",
-      duration: "2025.02",
-      endDate: "Present",
-      details: [
-        "CloudiA Kubernetes Service 설계 및 개발",
-        "CloudiA AlphaFold2 서비스 설계 및 개발",
-      ],
-      current: true
-    },
-    {
-      position: "팀원",
-      team: "경영전략팀",
-      company: "TmaxCloud",
-      duration: "2023.12",
-      endDate: "2025.02",
-      details: [
-        "시장 리서치 및 경쟁사 분석",
-        "글로벌 파트너십 전략 수립",
-        "신규 사업 기회 발굴 및 타당성 검토"
-      ],
-      current: false
-    }
-  ];
+  $: experiences = t($language, 'resume.experiences').map((exp, index) => ({
+    ...exp,
+    current: index === 0
+  }));
 
-  const education = [
-    { 
-      school: "42 Seoul", 
-      degree: "Computer Science",
-      field: "Intensive Programming",
-      year: "2021.09",
-      endYear: "2023.09"
-    },
-    { 
-      school: "중앙대학교", 
-      degree: "Sociology",
-      field: "Bachelor's Degree",
-      year: "2016.03",
-      endYear: "2022.08"
-    }
-  ];
+  $: education = t($language, 'resume.education');
 
-  const certifications = [
-    { 
-      institution: "AWS", 
-      title: "Solutions Architect Associate", 
-      year: "2024.09",
-      badge: "☁️"
-    },
-    { 
-      institution: "AWS", 
-      title: "Cloud Practitioner", 
-      year: "2023.07",
-      badge: "☁️"
-    },
-    { 
-      institution: "English", 
-      title: "OPIc IH", 
-      year: "2023.09",
-      badge: "🌐"
-    }
-  ];
+  $: certifications = t($language, 'resume.certifications');
 
-  const skills = {
-    "Technical": ["AI Driven Development", "Kubernetes", "Cloud Architecture", "AI Workload"],
-    "Business": ["Strategic Planning", "Market Research"],
-    "Languages": ["Korean (Native)", "English (Business)"]
-  };
+  $: skills = t($language, 'resume.skills');
   
   let isVisible = false;
   
@@ -125,7 +66,7 @@
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
             <span class="relative">
-              LinkedIn
+              {t($language, 'contact.linkedin')}
               <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-blue group-hover:w-full transition-all duration-300"></span>
             </span>
           </a>
@@ -136,7 +77,7 @@
     <!-- Experience Timeline Section -->
     {#if isVisible}
       <div class="mb-24" in:fly={{ y: 20, duration: 800, delay: 200 }}>
-        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">Experience Timeline</h2>
+        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">{t($language, 'resume.sections.experienceTimeline')}</h2>
         
         <div class="relative">
           <!-- Timeline line -->
@@ -162,7 +103,7 @@
                 <h3 class="text-xl font-light text-primary-black mb-1 tracking-wide">
                   {experience.company}
                   {#if experience.current}
-                    <span class="ml-2 text-xs uppercase tracking-wider text-accent-blue">Current</span>
+                    <span class="ml-2 text-xs uppercase tracking-wider text-accent-blue">{t($language, 'resume.sections.current')}</span>
                   {/if}
                 </h3>
                 <p class="text-sm text-primary-gray mb-1">{experience.position} · {experience.team}</p>
@@ -185,7 +126,7 @@
     <!-- Education Timeline -->
     {#if isVisible}
       <div class="mb-24" in:fly={{ y: 20, duration: 800, delay: 400 }}>
-        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">Education</h2>
+        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">{t($language, 'resume.sections.education')}</h2>
         
         <div class="relative">
           <!-- Timeline line -->
@@ -220,7 +161,7 @@
     <!-- Certifications Grid -->
     {#if isVisible}
       <div class="mb-24" in:fly={{ y: 20, duration: 800, delay: 600 }}>
-        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">Certifications</h2>
+        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">{t($language, 'resume.sections.certifications')}</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           {#each certifications as cert, i}
@@ -241,7 +182,7 @@
     <!-- Skills Matrix -->
     {#if isVisible}
       <div class="mb-24" in:fly={{ y: 20, duration: 800, delay: 800 }}>
-        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">Skills & Expertise</h2>
+        <h2 class="text-xs uppercase tracking-super-wide text-primary-gray mb-12">{t($language, 'resume.sections.skillsExpertise')}</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
           {#each Object.entries(skills) as [category, items], i}
